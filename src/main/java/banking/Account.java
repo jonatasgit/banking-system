@@ -21,8 +21,10 @@ public abstract class Account implements AccountInterface {
     }
 
     public boolean validatePin(int attemptedPin) {
-        // TODO: complete the method
-        return false;
+        if(attemptedPin == this.pin)
+            return true;
+        else
+            return false;
     }
 
     public double getBalance() {
@@ -34,11 +36,15 @@ public abstract class Account implements AccountInterface {
     }
 
     public void creditAccount(double amount) {
-        // TODO: complete the method
+        this.balance = this.balance + amount;
     }
 
     public boolean debitAccount(double amount) {
-        // TODO: complete the method
-        return false;
+        if(this.balance >= amount){
+            this.balance = this.balance - amount;
+            return true;
+        } else{
+            return false;
+        }
     }
 }

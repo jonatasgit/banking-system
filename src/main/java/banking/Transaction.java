@@ -16,6 +16,10 @@ public class Transaction implements TransactionInterface {
     public Transaction(BankInterface bank, Long accountNumber, int attemptedPin) throws Exception {
         this.accountNumber = accountNumber;
         this.bank = bank;
+
+        if(!bank.authenticateUser(accountNumber, attemptedPin)){
+            throw new Exception("Invalid Pin");
+        }
     }
 
     public double getBalance() {
@@ -27,7 +31,6 @@ public class Transaction implements TransactionInterface {
     }
 
     public boolean debit(double amount) {
-        // TODO: complete the method
-        return false;
+        return this.bank.debit(this.accountNumber, amount);
     }
 }

@@ -75,17 +75,27 @@ public class Bank implements BankInterface {
     }
 
     public void credit(Long accountNumber, double amount) {
-        // TODO: complete the method
+        if(Objects.nonNull(this.accounts.get(accountNumber))){
+            Account acc = this.accounts.get(accountNumber);
+            acc.creditAccount(amount);
+        }
     }
 
     public boolean debit(Long accountNumber, double amount) {
-        // TODO: complete the method
+        if(Objects.nonNull(this.accounts.get(accountNumber))){
+            Account acc = this.accounts.get(accountNumber);
+            return acc.debitAccount(amount);
+        }
         return false;
     }
 
     public boolean authenticateUser(Long accountNumber, int pin) {
-        // TODO: complete the method
-        return false;
+        if(Objects.nonNull(this.accounts.get(accountNumber))){
+            Account acc = this.accounts.get(accountNumber);
+            return acc.validatePin(pin);
+        } else {
+            return false;
+        }
     }
     
     public void addAuthorizedUser(Long accountNumber, Person authorizedPerson) {
@@ -103,7 +113,24 @@ public class Bank implements BankInterface {
     }
 
     public Map<String, Double> getAverageBalanceReport() {
-        // TODO: complete the method
-        return new HashMap<>();
+        HashMap<String, Double>  avarageBalance = new HashMap<>();
+        Set<Long> keys = this.accounts.keySet();
+        int consumerCount = 0;
+        Double consumerTotal = (double) 0;
+        int comercialCount = 0;
+        Double comercialTotal = (double) 0;
+        for(Long key : keys){
+            Account acc = this.accounts.get(key);
+            if(acc instanceof CommercialAccount){
+                comercialCount++;
+                comercialTotal = comercialTotal + acc.getBalance();
+            } else {
+                consumerCount++;
+                consumerTotal = consumerTotal + acc.getBalance();
+            }
+            avarageBalance.put("ConsumerAccount", consumerTotal/consumerCount);
+            avarageBalance.put("CommercialAccount", comercialTotal/comercialCount);
+        }
+        return avarageBalance;
     }
 }
