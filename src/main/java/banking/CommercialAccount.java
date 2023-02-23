@@ -10,9 +10,7 @@ import java.util.List;
 public class CommercialAccount extends Account {
     private List<Person> authorizedUsers;
     private Company company;
-    //public CommercialAccount(Company company, Long accountNumber, int pin, double startingDeposit) {
 
-    //}
 
     protected CommercialAccount(Company company, AccountHolder accountHolder, Long accountNumber, int pin, double startingDeposit) {
         super(accountHolder, accountNumber, pin, startingDeposit);
